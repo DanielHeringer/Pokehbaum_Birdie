@@ -2,7 +2,7 @@
   <div>
     <Top />
     <List :pokemons="pokemons"/> 
-    <Stats /> 
+    <Stats/> 
   </div>
 </template>
 
@@ -32,7 +32,7 @@ export default {
     for (i=(((this.page)*151)+1); i <= (151*(this.page+1)); i++) {
       url = 'https://pokeapi.co/api/v2/pokemon/' + i + '/';
       
-      fetch(url, {
+      var a = await fetch(url, {
         method: 'get'
       })
       .then((response) =>{
