@@ -32,7 +32,7 @@ export default {
     for (i=(((this.page)*151)+1); i <= (151*(this.page+1)); i++) {
       url = 'https://pokeapi.co/api/v2/pokemon/' + i + '/';
       
-      var a = await fetch(url, {
+      fetch(url, {
         method: 'get'
       })
       .then((response) =>{
@@ -42,6 +42,15 @@ export default {
         this.pokemons.push(response);
       });
     }
+
+    this.pokemons.sort(function(a,b){
+        if(a.id == b.id)
+            return 0;
+        if(a.id < b.id)
+            return -1;
+        if(a.id > b.id)
+            return 1;
+    });
   }
 }
 </script>
