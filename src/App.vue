@@ -2,7 +2,11 @@
   <div>
     <Top />
     <List :pokemons="pokemons"/> 
+<<<<<<< HEAD
+    <Stats /> 
+=======
     <Stats/> 
+>>>>>>> VueJS
   </div>
 </template>
 
@@ -42,6 +46,15 @@ export default {
         this.pokemons.push(response);
       });
     }
+
+    this.pokemons.sort(function(a,b){
+        if(a.id == b.id)
+            return 0;
+        if(a.id < b.id)
+            return -1;
+        if(a.id > b.id)
+            return 1;
+    });
   }
 }
 </script>
