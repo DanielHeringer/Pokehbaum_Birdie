@@ -88,6 +88,7 @@ a {
 .pokemons{
     width: 95%;
     margin: auto;
+    margin-top: 20px;
     text-align: center;
 }
 .pokemons .box{
@@ -113,7 +114,7 @@ a {
     font: 20px 'Product Sans Regular';
 }
 
-#transition-background{
+#stats{
     position: absolute;
     top:60px;
     transform: translateX(100%);
