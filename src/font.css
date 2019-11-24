@@ -4,7 +4,7 @@
 font-family: 'Product Sans Regular';
 font-style: normal;
 font-weight: normal;
-src: local('Product Sans Regular'), url('../font/ProductSans-Regular.woff') format('woff');
+src: local('Product Sans Regular'), url('assets/font/ProductSans-Regular.woff') format('woff');
 }
 
 
@@ -12,7 +12,7 @@ src: local('Product Sans Regular'), url('../font/ProductSans-Regular.woff') form
 font-family: 'Product Sans Italic';
 font-style: normal;
 font-weight: normal;
-src: local('Product Sans Italic'), url('../font/ProductSans-Italic.woff') format('woff');
+src: local('Product Sans Italic'), url('assets/font/ProductSans-Italic.woff') format('woff');
 }
 
 
@@ -20,7 +20,7 @@ src: local('Product Sans Italic'), url('../font/ProductSans-Italic.woff') format
 font-family: 'Product Sans Thin Regular';
 font-style: normal;
 font-weight: normal;
-src: local('Product Sans Thin Regular'), url('../font/ProductSans-Thin.woff') format('woff');
+src: local('Product Sans Thin Regular'), url('assets/font/ProductSans-Thin.woff') format('woff');
 }
 
 
@@ -28,7 +28,7 @@ src: local('Product Sans Thin Regular'), url('../font/ProductSans-Thin.woff') fo
 font-family: 'Product Sans Light Regular';
 font-style: normal;
 font-weight: normal;
-src: local('Product Sans Light Regular'), url('../font/ProductSans-Light.woff') format('woff');
+src: local('Product Sans Light Regular'), url('assets/font/ProductSans-Light.woff') format('woff');
 }
 
 
@@ -36,7 +36,7 @@ src: local('Product Sans Light Regular'), url('../font/ProductSans-Light.woff') 
 font-family: 'Product Sans Medium Regular';
 font-style: normal;
 font-weight: normal;
-src: local('Product Sans Medium Regular'), url('../font/ProductSans-Medium.woff') format('woff');
+src: local('Product Sans Medium Regular'), url('assets/font/ProductSans-Medium.woff') format('woff');
 }
 
 
@@ -44,7 +44,7 @@ src: local('Product Sans Medium Regular'), url('../font/ProductSans-Medium.woff'
 font-family: 'Product Sans Black Regular';
 font-style: normal;
 font-weight: normal;
-src: local('Product Sans Black Regular'), url('../font/ProductSans-Black.woff') format('woff');
+src: local('Product Sans Black Regular'), url('assets/font/ProductSans-Black.woff') format('woff');
 }
 
 
@@ -52,7 +52,7 @@ src: local('Product Sans Black Regular'), url('../font/ProductSans-Black.woff') 
 font-family: 'Product Sans Thin Italic';
 font-style: normal;
 font-weight: normal;
-src: local('Product Sans Thin Italic'), url('../font/ProductSans-ThinItalic.woff') format('woff');
+src: local('Product Sans Thin Italic'), url('assets/font/ProductSans-ThinItalic.woff') format('woff');
 }
 
 
@@ -60,7 +60,7 @@ src: local('Product Sans Thin Italic'), url('../font/ProductSans-ThinItalic.woff
 font-family: 'Product Sans Light Italic';
 font-style: normal;
 font-weight: normal;
-src: local('Product Sans Light Italic'), url('../font/ProductSans-LightItalic.woff') format('woff');
+src: local('Product Sans Light Italic'), url('assets/font/ProductSans-LightItalic.woff') format('woff');
 }
 
 
@@ -68,7 +68,7 @@ src: local('Product Sans Light Italic'), url('../font/ProductSans-LightItalic.wo
 font-family: 'Product Sans Medium Italic';
 font-style: normal;
 font-weight: normal;
-src: local('Product Sans Medium Italic'), url('../font/ProductSans-MediumItalic.woff') format('woff');
+src: local('Product Sans Medium Italic'), url('assets/font/ProductSans-MediumItalic.woff') format('woff');
 }
 
 
@@ -76,7 +76,7 @@ src: local('Product Sans Medium Italic'), url('../font/ProductSans-MediumItalic.
 font-family: 'Product Sans Bold';
 font-style: normal;
 font-weight: normal;
-src: local('Product Sans Bold'), url('../font/ProductSans-Bold.woff') format('woff');
+src: local('Product Sans Bold'), url('assets/font/ProductSans-Bold.woff') format('woff');
 }
 
 
@@ -84,7 +84,7 @@ src: local('Product Sans Bold'), url('../font/ProductSans-Bold.woff') format('wo
 font-family: 'Product Sans Bold Italic';
 font-style: normal;
 font-weight: normal;
-src: local('Product Sans Bold Italic'), url('../font/ProductSans-BoldItalic.woff') format('woff');
+src: local('Product Sans Bold Italic'), url('assets/font/ProductSans-BoldItalic.woff') format('woff');
 }
 
 
@@ -92,5 +92,5 @@ src: local('Product Sans Bold Italic'), url('../font/ProductSans-BoldItalic.woff
 font-family: 'Product Sans Black Italic';
 font-style: normal;
 font-weight: normal;
-src: local('Product Sans Black Italic'), url('../font/ProductSans-BlackItalic.woff') format('woff');
+src: local('Product Sans Black Italic'), url('assets/font/ProductSans-BlackItalic.woff') format('woff');
 }

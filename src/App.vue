@@ -2,7 +2,7 @@
   <div>
     <Top />
     <List :pokemons="pokemons"/> 
-    <Stats /> 
+    <Stats/> 
   </div>
 </template>
 

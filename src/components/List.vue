@@ -14,8 +14,7 @@
 export default {
   name: 'List',
   props: {
-    pokemons: Array,
-    imgs: Array
+    pokemons: Array
   },
   data(){
     return{
