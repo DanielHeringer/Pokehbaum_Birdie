@@ -1,7 +1,7 @@
 <template>
     <div class="top">
         <div id="logo" @click="home">
-            <img src="https://i.dlpng.com/static/png/254978_preview.png" height="40px"> 
+            <img src="../assets/logo.png" height="40px"> 
             <div id="text">   
                 Pokedex
             </div>
@@ -38,6 +38,9 @@ export default {
     },
     closeStats: function(){
         document.getElementById('stats').style.transform="translateX(-100%)";
+        setTimeout(function(){
+            document.getElementById('stats').style.display="none";
+        }, 200);
     }
   }
     

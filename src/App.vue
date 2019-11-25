@@ -1,8 +1,9 @@
 <template>
   <div>
     <Top @search="updateSearch" @page="updatePage"/>
+    <Stats :id="Number(stats_show)" />
     <List :name_list="name_list" :url_list="url_list" :search="search" :page="page" @page="updatePage" @statsID="updateStatsID" /> 
-    <Stats :id="Number(stats_show)" /> 
+     
   </div>
 </template>
 

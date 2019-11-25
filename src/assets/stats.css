@@ -1,0 +1,88 @@
+
+#stats{
+    position: relative;
+    display: none;
+    top:60px;
+    transform: translateX(-100%);
+    background-color: #fff;
+    width: 100%;
+    height: auto;
+    min-height: 100%;
+    z-index: 9999;
+}
+
+#stats .box{
+    width: 80%;
+    display: flex;
+    align-items: center;
+    margin: auto;
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    background-color: #eee;
+    padding: 30px;
+}
+#stats .name{
+    text-align: center;
+    display: inline-block;
+    width: 90%;
+    font-size: 60px;
+}
+#stats .box #main_img{
+    margin-right: 50px;
+    display: inline-block;
+    width: 20%;
+}
+
+.statsBarBox{
+    position: relative;
+    width: 30%; 
+    height: 100%;
+    float: right;
+    font-size: 15px;
+}
+.statsBar{
+    margin-bottom: 10px;
+    border-radius: 5px; 
+    display: block;
+    width: 60%;
+    height: 40px;
+    background-color: #aaa;
+}
+
+.statsBarIn{
+    display: flex;
+    align-items: center;
+    width: 20%;
+    border-radius: 5px; 
+    height: 100%;
+    color: #fff;
+    text-align: center;
+    background-color: blue;
+}
+.statsBarIn p{
+    margin-left:5px;
+    font-size: 20px;
+}
+
+.back{
+    display: inline-block;
+    margin-top: 20px;
+    margin-left: 30px;
+    cursor: pointer;
+    color: black;
+    font-weight: bold;
+}
+
+
+@media screen and (max-width: 600px) {
+    .back{
+        display: none
+    }
+    #stats .box{
+        width: 90%;
+        margin: auto;
+        margin-top: 120px;
+        padding: 10px;
+    }
+  }

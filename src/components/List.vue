@@ -55,7 +55,11 @@ export default {
         openStats: function(id){
           this.$emit("statsID", id);
           setTimeout(function(){
-            document.getElementById('stats').style.transform="translateX(0%)";
+                document.getElementById('stats').style.display="block";
+            setTimeout(function(){
+                document.getElementById('stats').style.transform="translateX(0%)";
+                window.scrollTo(0, 0);
+            }, 200);
           }, 100);
         }
   },
@@ -73,11 +77,13 @@ export default {
 <style>
 
 .pokemons{
+    display: inline-block;
     width: 95%;
     margin: auto;
     margin-top: 100px;
     text-align: center;
-}
+    transition: 2s;
+    }
 .pokemons .box{
     display: inline-block;
     border-radius: 5px;
