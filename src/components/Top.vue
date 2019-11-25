@@ -1,19 +1,36 @@
 <template>
     <div class="top">
-        <div id="text" onclick="transitionOut();">
+        <div id="text" @click="empty_search">
             Pokedex
         </div>
         <div class="search">
-            <form class="search-container" method="GET">
-                <input type="search" name="s" placeholder="Pikachu...">
-                <button type="submit">Search</button>
-            </form>
+            <div class="search-container">
+                <input type="text" v-model="search" @keyup="sendBack" placeholder="Pikachu...">
+                <div class="btn" @click="sendBack">Search</div>
+            </div>
         </div>
     </div>     
 </template>
 
 <script>
 export default {
+  name: 'Top',
+  props: {
+  },
+  data(){
+    return{
+        search:""
+    }
+  },
+  methods: {
+    sendBack: function() {
+        this.$emit("search", this.search);
+    },
+    empty_search: function() {
+        this.search = "";
+        this.$emit("search", this.search);
+    }
+  }
     
 }
 </script>
@@ -60,33 +77,28 @@ export default {
     margin-right: 30px;
 }
 
-.search input[type=search]{ 
+.search input[type=text]{ 
     height: 40px;
     float: left;
     background-color: #eee;
     border: 1px solid #ccc;
+    padding: 0 10px;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
-    padding: 0 10px;
-
 }
 
 .search input[type=search]:focus{ 
     outline: none;
     border: 1px solid #aaa;
 }
-.search button{
+.search .btn{
     float: left;
     border: none;
+    color: white;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
-    color: white;
     background: #319e8a;
-    cursor: pointer;
-    height: 40px;
-}
-.search button:hover{
-    background: #21695c;
+    padding: 9px;
 }
 
 

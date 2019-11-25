@@ -1,12 +1,8 @@
 <template>
   <div>
-    <Top />
-    <List :pokemons="pokemons"/> 
-<<<<<<< HEAD
-    <Stats /> 
-=======
+    <Top @search="updateSearch"/>
+    <List :name_list="name_list" :url_list="url_list" :search="search" :page="page" /> 
     <Stats/> 
->>>>>>> VueJS
   </div>
 </template>
 
@@ -24,37 +20,58 @@ export default {
   },
   data(){
     return{
-      pokemons: [],
-      pokemons_evolution: [],
-      page: 0
+      pokemons: Object,
+      page: 3,
+      search: '',
+      limit: 808,
+      offset: (this.page*this.limit),
+      url_list: [],
+      name_list: []
     }
   },
   mounted: function(){
-    var url = '';
-    var i=0;
-    
-    for (i=(((this.page)*151)+1); i <= (151*(this.page+1)); i++) {
-      url = 'https://pokeapi.co/api/v2/pokemon/' + i + '/';
-      
-      fetch(url, {
-        method: 'get'
-      })
-      .then((response) =>{
-        return response.json()
-      })
-      .then((response) =>{
-        this.pokemons.push(response);
-      });
-    }
-
-    this.pokemons.sort(function(a,b){
-        if(a.id == b.id)
-            return 0;
-        if(a.id < b.id)
-            return -1;
-        if(a.id > b.id)
-            return 1;
+    fetch('https://pokeapi.co/api/v2/pokemon/?limit='+this.limit+'&offset='+this.offset, {
+      method: 'get'
+    })
+    .then((response) =>{
+      return response.json()
+    })
+    .then((response) =>{
+      this.pokemons = response.results;
+      this.generate_list();
+      this.replace_underline();
     });
+  },
+  methods:{
+    generate_list: function(){
+      this.name_list = [];
+      this.url_list = [];
+        var i = 0;
+        if(this.search === ''){
+          for(i=this.page*151;i<(this.page+1)*151; i++){
+            this.name_list.push(this.pokemons[i].name);
+            this.url_list.push(this.pokemons[i].url);
+          }   
+        }
+        else{
+          for(i=0; i < Object.keys(this.pokemons).length; i++){
+            if(this.pokemons[i].name.toUpperCase().includes(this.search.toUpperCase())){
+              this.name_list.push(this.pokemons[i].name);
+              this.url_list.push(this.pokemons[i].url);
+            }
+          }
+        }
+      },
+    updateSearch(s){
+      this.search = s;
+      this.generate_list();
+      this.replace_underline();
+    },
+    replace_underline: function(){
+        for(var i=0; i< this.name_list.length; i++){
+            this.name_list[i].replace("-", " ");
+        }
+    }
   }
 }
 </script>
