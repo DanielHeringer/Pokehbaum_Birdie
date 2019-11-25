@@ -1,8 +1,8 @@
 <template>
   <div>
-    <Top @search="updateSearch"/>
-    <List :name_list="name_list" :url_list="url_list" :search="search" :page="page" /> 
-    <Stats/> 
+    <Top @search="updateSearch" @page="updatePage"/>
+    <List :name_list="name_list" :url_list="url_list" :search="search" :page="page" @page="updatePage" @statsID="updateStatsID" /> 
+    <Stats :id="Number(stats_show)" /> 
   </div>
 </template>
 
@@ -21,12 +21,13 @@ export default {
   data(){
     return{
       pokemons: Object,
-      page: 3,
+      page: 0,
       search: '',
       limit: 808,
       offset: (this.page*this.limit),
       url_list: [],
-      name_list: []
+      name_list: [],
+      stats_show: 1
     }
   },
   mounted: function(){
@@ -39,7 +40,6 @@ export default {
     .then((response) =>{
       this.pokemons = response.results;
       this.generate_list();
-      this.replace_underline();
     });
   },
   methods:{
@@ -48,16 +48,20 @@ export default {
       this.url_list = [];
         var i = 0;
         if(this.search === ''){
-          for(i=this.page*151;i<(this.page+1)*151; i++){
+          for(i=this.page*60;i<(this.page+1)*60; i++){
             this.name_list.push(this.pokemons[i].name);
             this.url_list.push(this.pokemons[i].url);
           }   
         }
         else{
-          for(i=0; i < Object.keys(this.pokemons).length; i++){
+          var flag = 1;
+          for(i=0; (i < Object.keys(this.pokemons).length) && flag; i++){
             if(this.pokemons[i].name.toUpperCase().includes(this.search.toUpperCase())){
               this.name_list.push(this.pokemons[i].name);
               this.url_list.push(this.pokemons[i].url);
+            }
+            if(this.name_list.length > 60){
+              flag = 0;
             }
           }
         }
@@ -65,12 +69,13 @@ export default {
     updateSearch(s){
       this.search = s;
       this.generate_list();
-      this.replace_underline();
     },
-    replace_underline: function(){
-        for(var i=0; i< this.name_list.length; i++){
-            this.name_list[i].replace("-", " ");
-        }
+    updatePage(p){
+      this.page = p;
+      this.generate_list();
+    },
+    updateStatsID(s){
+      this.stats_show = s;
     }
   }
 }
@@ -78,9 +83,10 @@ export default {
 
 <style>
 @import "font.css"; 
+
 body{
     overflow-x: auto;
-    background-color: white;
+    background-color: #fff;
 }
 *{
     margin: 0;

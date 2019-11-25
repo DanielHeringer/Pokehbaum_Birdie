@@ -1,7 +1,10 @@
 <template>
     <div class="top">
-        <div id="text" @click="empty_search">
-            Pokedex
+        <div id="logo" @click="home">
+            <img src="https://i.dlpng.com/static/png/254978_preview.png" height="40px"> 
+            <div id="text">   
+                Pokedex
+            </div>
         </div>
         <div class="search">
             <div class="search-container">
@@ -24,11 +27,17 @@ export default {
   },
   methods: {
     sendBack: function() {
+        this.closeStats();
         this.$emit("search", this.search);
     },
-    empty_search: function() {
+    home: function() {
         this.search = "";
+        this.closeStats();
         this.$emit("search", this.search);
+        this.$emit("page", 0);
+    },
+    closeStats: function(){
+        document.getElementById('stats').style.transform="translateX(-100%)";
     }
   }
     
@@ -41,23 +50,34 @@ export default {
     margin: 0;
     position: fixed;
     top:0;
-    border: 0px solid black;
+    /* border: 1px solid black; */
     width: 100%;
     height: 60px;
-    background-color: #3dc4ac;
+    background-color: #3D7DCA;
     color: white;
     z-index: 99999999;
 }
-#text{
-    padding: 10px;
+#logo{
+    display: inline-block;
+    padding: 0px;
     padding-left:30px;
-    font-size: 20px;
+    height: 60px;
+    cursor: pointer;
+    /* border: 1px solid black; */
+}
+#logo img{
+    display: inline-block;
+    padding: 0px;
+    height: 40px;
+    margin-top: 10px;
     /* border: 1px solid black; */
 }
 .top #text{    
+    position: relative;
     display: inline-block;
-    width: 200px;
+    /* border: 1px solid black; */
     cursor: pointer;
+    top:-8px;
     font: 30px 'Product Sans Regular';
 }
 .search{
@@ -97,7 +117,7 @@ export default {
     color: white;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
-    background: #319e8a;
+    background: #003A70;
     padding: 9px;
 }
 
@@ -115,9 +135,10 @@ export default {
         margin-right: 0px;
     }
     .top{
+        position: relative;
         text-align: center;
         display: block;
-        height: 120px;
+        height: 140px;
         float: center;
         padding:0px;
     }
