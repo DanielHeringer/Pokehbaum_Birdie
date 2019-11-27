@@ -1,17 +1,23 @@
 <template>
     <div class="pokemons">
-        <div style="display:inline-block;" v-for="(name, index) in name_list" :key="name">
-            <div class="box" @click="openStats(getID(String(url_list[index])))">
-                <div class="imgbox">
-                  <img :src="img_url+getID(String(url_list[index]))+img_type" :id="getID(String(url_list[index]))" @error="imgerror(getID(String(url_list[index])))"  height="100%" width="100%">
+        <div v-if="n_pokemons < 1">
+          No matching for "{{search}}"
+        </div>
+        <div style="display:inline-block;" v-for="(name, index) in name_list" :key="name" >
+            <div class="box" @click="openStats(String(id_list[index]))">
+                
+                <div class="imgbox" :id="'imgBox'+String(id_list[index])">
+                  <img  v-if="id_list[index]>=100" :src="img_url+String(id_list[index])+img_type" @load="imgLoaded(id_list[index])" :id="String(id_list[index])" @error="imgerror(this)"  height="100%" width="100%">
+                  <img  v-else-if="id_list[index]>=10" :src="img_url+'0'+String(id_list[index])+img_type" @load="imgLoaded(id_list[index])" :id="String(id_list[index])" @error="imgerror(this)"  height="100%" width="100%">
+                  <img  v-else :src="img_url+'00'+String(id_list[index])+img_type" @load="imgLoaded(id_list[index])" :id="String(id_list[index])" @error="imgerror(this)"  height="100%" width="100%">
                 </div>
                 <div class="name">
                     {{name | capitalize }}
                 </div>
             </div>
         </div>
-        <div class="pagination" v-if="search===''">
-              <div v-for="p in 14" :key="p" @click="sendPageBack(p-1)" style="display: inline-block;">
+        <div class="pagination">
+              <div v-for="p in (Math.ceil(n_pokemons/60))" :key="p" @click="sendPageBack(p-1)" style="display: inline-block;">
                 <div id="selected" v-if="(p-1) === page_number" >
                   {{p}}
                 </div> 
@@ -29,38 +35,61 @@ export default {
   name: 'List',
   props: {
     name_list: Array,
-    url_list: Array,
+    id_list: Array,
+    type_list: Array,
     search: String,
-    page: Number
+    page: Number,
+    color_types: {},
+    n_pokemons: Number
   },
   data(){
     return{
-        img_url:"https://pokeres.bastionbot.org/images/pokemon/",
+        img_url:"https://assets.pokemon.com/assets/cms2/img/pokedex/full/",
         img_type:".png",
-        page_number: this.page
+        page_number: this.page,
+        color_list: Array,
+        
     }
   },
+  mounted: function () {
+    // alert(this.type_list
+    // this.findColor()
+  },
   methods: {
-        getID: function(url){
-            return (url.match(/(\d+)/g) || [])[1];
+        findColor: function () {
+          this.name_list.forEach(name => {
+            this.type_list.forEach(type => {
+              if(type.name === name){
+                alert("a")
+              }
+            });
+          });
         },
-        imgerror: function(id){
-            document.getElementById(id).src = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/"+id+this.img_type;
+        imgLoaded: function (id) {
+          document.getElementById('imgBox'+id).style.background="transparent"
+        },
+        imgerror: function(img){
+          img.src = "../assets/missing.png"
         },
 
         sendPageBack: function(p) {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+          });
             this.page_number = p;
             this.$emit("page", p);
         },
         openStats: function(id){
           this.$emit("statsID", id);
+          document.getElementById('stats').style.display="block";
           setTimeout(function(){
-                document.getElementById('stats').style.display="block";
-            setTimeout(function(){
-                document.getElementById('stats').style.transform="translateX(0%)";
-                window.scrollTo(0, 0);
-            }, 200);
-          }, 100);
+            document.getElementById('stats').style.transform="translateY(0%)";
+          }, 200);
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+          });
         }
   },
   filters: {
@@ -74,87 +103,6 @@ export default {
 </script>
 
 
-<style>
-
-.pokemons{
-    display: inline-block;
-    width: 95%;
-    margin: auto;
-    margin-top: 100px;
-    text-align: center;
-    transition: 2s;
-    }
-.pokemons .box{
-    display: inline-block;
-    border-radius: 5px;
-    width: 150px;
-    margin: 7px;
-    cursor: pointer;
-    background-color: #ddd;
-}
-.pokemons .box:hover{
-    transform: scale(1.1);
-    box-shadow: 0px 0px 4px #319e8a;
-}
-.pokemons .box img{
-    width: 90%;
-    margin: 10px;
-    -webkit-filter: drop-shadow(5px 5px 5px #222);
-    filter: drop-shadow(5px 5px 5px #222);
-}
-.pokemons .box .imgbox{
-  height: 150px;
-}
-.pokemons .box .name{
-    background: #003A70;
-    width: 100%;
-    padding: 5px 0px; 
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    color: white;
-    font: 20px 'Product Sans Regular';
-}
-
-.pagination {
-  display: block;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-.pagination #top{
-  display: block;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-.pagination .item {
-  background-color: #ddd;
-  color: black;
-  width: 16px;
-  padding: 4px 12px;
-  margin-right: 5px;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-.pagination #selected{
-  width: 16px;
-  padding: 4px 12px;
-  margin-right: 5px;
-  border-radius: 5px;
-  background-color: #003A70;
-  color: white;
-}
-
-.pagination .item:hover{
-  background-color: #003A70;
-  color: white;
-}
-
-
-@media screen and (max-width: 600px) {
-.pokemons{
-  margin-top: 0px;
-}
-
-}
+<style>  
+    @import "../assets/list.css"; 
 </style>

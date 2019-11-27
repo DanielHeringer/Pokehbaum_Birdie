@@ -28,6 +28,11 @@ export default {
   methods: {
     sendBack: function() {
         this.closeStats();
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+          });
+        this.$emit("page", 0);
         this.$emit("search", this.search);
     },
     home: function() {
@@ -37,7 +42,7 @@ export default {
         this.$emit("page", 0);
     },
     closeStats: function(){
-        document.getElementById('stats').style.transform="translateX(-100%)";
+        document.getElementById('stats').style.transform="translateY(-100%)";
         setTimeout(function(){
             document.getElementById('stats').style.display="none";
         }, 200);
@@ -147,6 +152,9 @@ export default {
     }
     .top #text{
         padding: 10px 0;
+    }
+    #logo{
+        padding: 0%;
     }
 }
 </style>

@@ -1,54 +1,58 @@
 <template>
-<div id="stats"> 
-    <div class="back" @click="closeStats">
-        back
-    </div>
-    <div class="name">
-        {{pokemon.name | capitalize}}
-    </div>
+<div id="stats">
     <div class="box">
-        <img id="main_img" :src="img_url+id+img_type">
-        <div class="statsBarBox">
-            HP:
-            <div class="statsBar" >
-                <div class="statsBarIn" id="hp">
-                    <p>{{pokemon.stats[5].base_stat}}</p>
-                </div>
-            </div>
-            Attack:
-            <div class="statsBar" >
-                <div class="statsBarIn" id="attack">
-                    <p>{{pokemon.stats[4].base_stat}}</p>
-                </div>
-            </div>
-            Defense:
-            <div class="statsBar" >
-                <div class="statsBarIn" id="defense">
-                    <p>{{pokemon.stats[3].base_stat}}</p>
-                </div>
+        <div class="nameImgContainer">
+            <img id="main_img" :src="img_url+id+img_type">
+            <div class="name">
+                #{{pokemon.id}} {{pokemon.name | capitalize}}
             </div>
         </div>
-        <div class="statsBarBox">
-            Speed:
-            <div class="statsBar" >
-                <div class="statsBarIn" id="speed">
-                    <p>{{pokemon.stats[0].base_stat}}</p>
+        <div class="statsContainer">
+            <div class="statsBarBox">
+                HP:
+                <div class="statsBar" >
+                    <div class="statsBarIn" id="hp">
+                        <p>{{pokemon.stats[5].base_stat}}</p>
+                    </div>
+                </div>
+                Attack:
+                <div class="statsBar" >
+                    <div class="statsBarIn" id="attack">
+                        <p>{{pokemon.stats[4].base_stat}}</p>
+                    </div>
+                </div>
+                Defense:
+                <div class="statsBar" >
+                    <div class="statsBarIn" id="defense">
+                        <p>{{pokemon.stats[3].base_stat}}</p>
+                    </div>
                 </div>
             </div>
-            Special Attack:
-            <div class="statsBar" >
-                <div class="statsBarIn" id="spatk">
-                    <p>{{pokemon.stats[2].base_stat}}</p>
+            <div class="statsBarBox">
+                Speed:
+                <div class="statsBar" >
+                    <div class="statsBarIn" id="speed">
+                        <p>{{pokemon.stats[0].base_stat}}</p>
+                    </div>
                 </div>
-            </div>
-            Special Def:
-            <div class="statsBar" >
-                <div class="statsBarIn" id="spdef">
-                    <p>{{pokemon.stats[1].base_stat}}</p>
+                Special Attack:
+                <div class="statsBar" >
+                    <div class="statsBarIn" id="spatk">
+                        <p>{{pokemon.stats[2].base_stat}}</p>
+                    </div>
+                </div>
+                Special Def:
+                <div class="statsBar" >
+                    <div class="statsBarIn" id="spdef">
+                        <p>{{pokemon.stats[1].base_stat}}</p>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="info">
+        </div>
+        <div class="back" @click="closeStats">
+            <img src="../assets/arrow_up.png" width="50px">
         </div>
     </div>
 </div>
@@ -59,13 +63,15 @@
 export default {
     name: 'Stats',
     props: {
-        id: Number
+        id: Number,
+        color_types: {}
     },
     data(){
         return{
             img_url:"https://pokeres.bastionbot.org/images/pokemon/",
             img_type:".png",
-            pokemon: Object
+            pokemon: Object,
+
         }
     },
     mounted: function () {
@@ -79,7 +85,6 @@ export default {
     methods: {
         updateStats: function () {
             var url = 'https://pokeapi.co/api/v2/pokemon/'+ this.id;
-            console.log(url);
             fetch(url,{
                 method: 'get'
             })
@@ -103,7 +108,7 @@ export default {
             });
         },
         closeStats: function(){
-            document.getElementById('stats').style.transform="translateX(-100%)";
+            document.getElementById('stats').style.transform="translateY(-100%)";
             setTimeout(function(){
                 document.getElementById('stats').style.display="none";
             }, 200);
@@ -124,6 +129,5 @@ export default {
 </script>
 
 <style>
-
-@import "../assets/stats.css"; 
+    @import "../assets/stats.css"; 
 </style>
