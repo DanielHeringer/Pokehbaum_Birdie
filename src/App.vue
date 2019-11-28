@@ -75,9 +75,7 @@ export default {
           
           // pesquisa em branco sem tipo
           if(this.typeSearch==="" && this.name_list.length < 60){
-            console.log(this.pokemons[i].name)
             if(this.n_pokemons < (60*(this.page+1)) && this.n_pokemons > (60*(this.page))){
-              console.log(this.pokemons[i].name)
               this.name_list.push(this.pokemons[i-1].name);
               this.id_list.push(this.getIDFromURL(this.pokemons[i-1].url));
             }
@@ -87,9 +85,7 @@ export default {
           else{
             typeList.forEach(name => {
               if((name[0] === this.typeSearch && name.includes(this.pokemons[i].name)  && this.name_list.length <60) ){
-                console.log(name[0]+ " === "+ this.typeSearch)
                 this.n_pokemons++
-                console.log(this.n_pokemons)
                 if(this.n_pokemons < (60*(this.page+1)) && this.n_pokemons > (60*(this.page))){
                   this.name_list.push(this.pokemons[i].name);
                   this.id_list.push(this.getIDFromURL(this.pokemons[i].url)); 
@@ -117,7 +113,6 @@ export default {
             if(this.pokemons[i].name.toUpperCase().includes(this.search.toUpperCase())){
               typeList.forEach(name => {
                 if((name[0] === this.typeSearch && name.includes(this.pokemons[i].name)  && this.name_list.length <60) ){
-                  console.log(name[0]+ " === "+ this.typeSearch)
                   this.n_pokemons++
                   if(this.n_pokemons < (60*(this.page+1)) && this.n_pokemons > (60*(this.page))){
                     this.name_list.push(this.pokemons[i].name);
@@ -189,7 +184,7 @@ body{
 *{
     margin: 0;
     font: 20px 'Product Sans thin Regular';
-    border: 01px solid black;
+    border: 0px solid black;
     transition: 0.3s;
 }
 a {

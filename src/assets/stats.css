@@ -47,7 +47,7 @@
 }
 .statsPosition{
     display:inline-block; 
-    width:30%;
+    width:45%;
 }
 .statsBarBox{
     font-family: 'Product Sans Regular';;
@@ -61,7 +61,6 @@
     margin-bottom: 5px;
     border-radius: 5px; 
     display: block;
-    width: 60%;
     height: 20px;
     background-color: #aaa;
 }
@@ -72,6 +71,7 @@
     width: 20%;
     border-radius: 5px; 
     height: 100%;
+    max-width: 100%;
     color: #fff;
     text-align: center;
     background-color: #003A70;
@@ -90,15 +90,15 @@
 }
 
 .info-container{
-
     float: right;
-    width: 65%;
+    height: 100%;
+    width: 48%;
 }
 .info{
     display: inline-block;
-    font-family: 'Product Sans Regular';;
+    font-family: 'Product Sans Regular';
+    width: 100%;
     text-align: center;
-    height: 100%;
 }
 
 .type{
@@ -117,7 +117,13 @@
     display: block;
     width: 100%;
 }
-
+.moves{
+    display: block;
+    margin-top:20px;
+    text-align: left;
+    font-family: 'Product Sans Regular';
+    width: 100%;
+}
 
 
 @media screen and (max-width: 600px) {
@@ -165,9 +171,10 @@
         width: 60%;
         margin: auto;
     }
-    .info{
+    .info-container{
+        margin-top: 20px;
         display: block;
         float: none;
         width: 100%;
     }
-  }
+ }

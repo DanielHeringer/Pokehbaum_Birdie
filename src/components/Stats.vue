@@ -58,13 +58,21 @@
             <div class="info-container">
                 <div class="info">
                     Abilities: <p v-for="abilitie in pokemon.abilities" :key="abilitie" >
-                    {{abilitie.ability.name | capitalize}}
+                    {{abilitie.ability.name.replace("-", " ") | capitalize}}
                 </p>
                 </div>
-                <div class="evolution">
-                    Abilities:
-                </div>
+                <!-- <div class="info">
+                    Evolves to: 
+                    <img id="e1" src="../assets/missing.png" v-if="n_evol > 0"> 
+                    <img id="e2" src="../assets/missing.png" v-if="n_evol > 1">
+                </div> -->
             </div>
+        </div>
+        <div class="moves">
+            Moves:
+                <b v-for="moves in pokemon.moves" :key="moves" >
+                {{moves.move.name.replace("-", " ") | capitalize }},
+                </b>  
         </div>
         <div class="back" @click="closeStats">
             <img src="../assets/arrow_up.png" width="50px">
@@ -86,6 +94,7 @@ export default {
             img_url:"https://pokeres.bastionbot.org/images/pokemon/",
             img_type:".png",
             pokemon: Object,
+            n_evol: 3
 
         }
     },
@@ -125,6 +134,19 @@ export default {
                     }, 400);
                 }
             });
+            url = "https://pokeapi.co/api/v2/evolution-chain/" + this.id
+            console.log(url)
+            fetch(url,{
+                method: 'get'
+            })
+            .then((response) =>{
+                return response.json();
+            })
+            .then((response) =>{
+                if(response.chain){
+                    document.getElementById('e1').src="https://assets.pokemon.com/assets/cms2/img/pokedex/full/"+(this.id+1)
+                }
+            })
         },
         closeStats: function(){
             document.getElementById('stats').style.transform="translateY(-100%)";
