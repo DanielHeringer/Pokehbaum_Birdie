@@ -1,6 +1,11 @@
 <template>
 <div id="stats">
     <div class="box">
+        <div class="type">
+            <p v-for="types in pokemon.types" :key="types" :style="'background-color:'+color_types[types.type.name]">
+                {{types.type.name | capitalize}}
+            </p>
+        </div>
         <div class="nameImgContainer">
             <img id="main_img" :src="img_url+id+img_type">
             <div class="name">
@@ -8,48 +13,58 @@
             </div>
         </div>
         <div class="statsContainer">
-            <div class="statsBarBox">
-                HP:
-                <div class="statsBar" >
-                    <div class="statsBarIn" id="hp">
-                        <p>{{pokemon.stats[5].base_stat}}</p>
+            <div class="statsPosition">
+                <div class="statsBarBox">
+                    HP:
+                    <div class="statsBar" >
+                        <div class="statsBarIn" id="hp">
+                            <p>{{pokemon.stats[5].base_stat}}</p>
+                        </div>
+                    </div>
+                    Attack:
+                    <div class="statsBar" >
+                        <div class="statsBarIn" id="attack">
+                            <p>{{pokemon.stats[4].base_stat}}</p>
+                        </div>
+                    </div>
+                    Defense:
+                    <div class="statsBar" >
+                        <div class="statsBarIn" id="defense">
+                            <p>{{pokemon.stats[3].base_stat}}</p>
+                        </div>
                     </div>
                 </div>
-                Attack:
-                <div class="statsBar" >
-                    <div class="statsBarIn" id="attack">
-                        <p>{{pokemon.stats[4].base_stat}}</p>
+                <div class="statsBarBox">
+                    Speed:
+                    <div class="statsBar" >
+                        <div class="statsBarIn" id="speed">
+                            <p>{{pokemon.stats[0].base_stat}}</p>
+                        </div>
                     </div>
-                </div>
-                Defense:
-                <div class="statsBar" >
-                    <div class="statsBarIn" id="defense">
-                        <p>{{pokemon.stats[3].base_stat}}</p>
+                    Special Attack:
+                    <div class="statsBar" >
+                        <div class="statsBarIn" id="spatk">
+                            <p>{{pokemon.stats[2].base_stat}}</p>
+                        </div>
+                    </div>
+                    Special Def:
+                    <div class="statsBar" >
+                        <div class="statsBarIn" id="spdef">
+                            <p>{{pokemon.stats[1].base_stat}}</p>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="statsBarBox">
-                Speed:
-                <div class="statsBar" >
-                    <div class="statsBarIn" id="speed">
-                        <p>{{pokemon.stats[0].base_stat}}</p>
-                    </div>
+            <div class="info-container">
+                <div class="info">
+                    Abilities: <p v-for="abilitie in pokemon.abilities" :key="abilitie" >
+                    {{abilitie.ability.name | capitalize}}
+                </p>
                 </div>
-                Special Attack:
-                <div class="statsBar" >
-                    <div class="statsBarIn" id="spatk">
-                        <p>{{pokemon.stats[2].base_stat}}</p>
-                    </div>
-                </div>
-                Special Def:
-                <div class="statsBar" >
-                    <div class="statsBarIn" id="spdef">
-                        <p>{{pokemon.stats[1].base_stat}}</p>
-                    </div>
+                <div class="evolution">
+                    Abilities:
                 </div>
             </div>
-        </div>
-        <div class="info">
         </div>
         <div class="back" @click="closeStats">
             <img src="../assets/arrow_up.png" width="50px">
@@ -99,12 +114,16 @@ export default {
                 var atk = this.pokemon.stats[4].base_stat;
                 var def = this.pokemon.stats[3].base_stat;
                 var hp = this.pokemon.stats[5].base_stat;
-                document.getElementById('speed').style.width=String(speed)+"%";
-                document.getElementById('spdef').style.width=String(spdef)+"%";
-                document.getElementById('spatk').style.width=String(spatk)+"%";
-                document.getElementById('attack').style.width=String(atk)+"%";
-                document.getElementById('defense').style.width=String(def)+"%";
-                document.getElementById('hp').style.width=String(hp)+"%";
+                if(document.getElementById('speed')){
+                    setTimeout(function(){
+                        document.getElementById('speed').style.width=String(speed)+"%";
+                        document.getElementById('spdef').style.width=String(spdef)+"%";
+                        document.getElementById('spatk').style.width=String(spatk)+"%";
+                        document.getElementById('attack').style.width=String(atk)+"%";
+                        document.getElementById('defense').style.width=String(def)+"%";
+                        document.getElementById('hp').style.width=String(hp)+"%";
+                    }, 400);
+                }
             });
         },
         closeStats: function(){

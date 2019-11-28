@@ -30,13 +30,13 @@
   background: url("loading.gif") no-repeat center/50%;
 }
 .pokemons .box .name{
-    background: #003A70;
     position: relative;
     width: 100%;
     padding: 5px 0px; 
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     color: white;
+    background-color: #003A70;
     font: 20px 'Product Sans Regular';
 }
 

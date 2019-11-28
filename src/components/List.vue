@@ -1,7 +1,7 @@
 <template>
     <div class="pokemons">
         <div v-if="n_pokemons < 1">
-          No matching for "{{search}}"
+          No results for "{{search}}"
         </div>
         <div style="display:inline-block;" v-for="(name, index) in name_list" :key="name" >
             <div class="box" @click="openStats(String(id_list[index]))">
@@ -11,7 +11,7 @@
                   <img  v-else-if="id_list[index]>=10" :src="img_url+'0'+String(id_list[index])+img_type" @load="imgLoaded(id_list[index])" :id="String(id_list[index])" @error="imgerror(this)"  height="100%" width="100%">
                   <img  v-else :src="img_url+'00'+String(id_list[index])+img_type" @load="imgLoaded(id_list[index])" :id="String(id_list[index])" @error="imgerror(this)"  height="100%" width="100%">
                 </div>
-                <div class="name">
+                <div class="name" :style="'background-color:'+color_list[index]">
                     {{name | capitalize }}
                 </div>
             </div>
@@ -37,6 +37,7 @@ export default {
     name_list: Array,
     id_list: Array,
     type_list: Array,
+    color_list: Array,
     search: String,
     page: Number,
     color_types: {},
@@ -47,24 +48,13 @@ export default {
         img_url:"https://assets.pokemon.com/assets/cms2/img/pokedex/full/",
         img_type:".png",
         page_number: this.page,
-        color_list: Array,
-        
+        colorLoad: 1
     }
   },
   mounted: function () {
-    // alert(this.type_list
-    // this.findColor()
+    
   },
   methods: {
-        findColor: function () {
-          this.name_list.forEach(name => {
-            this.type_list.forEach(type => {
-              if(type.name === name){
-                alert("a")
-              }
-            });
-          });
-        },
         imgLoaded: function (id) {
           document.getElementById('imgBox'+id).style.background="transparent"
         },

@@ -9,7 +9,12 @@
         <div class="search">
             <div class="search-container">
                 <input type="text" v-model="search" @keyup="sendBack" placeholder="Pikachu...">
-                <div class="btn" @click="sendBack">Search</div>
+                <select v-model="type_filter" @change="Filter" class="select-box">
+                    <option value="" selected >All types</option>
+                    <option v-for="option in options"  :key="option" v-bind:value="option.value">
+                        {{ option.text | capitalize}}
+                    </option>
+                </select>
             </div>
         </div>
     </div>     
@@ -22,7 +27,28 @@ export default {
   },
   data(){
     return{
-        search:""
+        search:"",
+        options: [
+            { value: 'bug', text: 'Bug' },
+            { value: 'dark', text: 'dark' },
+            { value: 'dragon', text: 'dragon' },
+            { value: 'electric', text: 'electric' },
+            { value: 'fairy', text: 'fairy' },
+            { value: 'fighting', text: 'fighting' },
+            { value: 'fire', text: 'fire' },
+            { value: 'flying', text: 'flying' },
+            { value: 'ghost', text: 'ghost' },
+            { value: 'ground', text: 'ground' },
+            { value: 'grass', text: 'grass' },
+            { value: 'ice', text: 'ice' },
+            { value: 'normal', text: 'normal' },
+            { value: 'poison', text: 'poison' },
+            { value: 'psychic', text: 'psychic' },
+            { value: 'rock', text: 'rock' },
+            { value: 'steel', text: 'steel' },
+            { value: 'water', text: 'water' }
+        ],
+        type_filter: ""
     }
   },
   methods: {
@@ -37,9 +63,22 @@ export default {
     },
     home: function() {
         this.search = "";
+        this.type_filter = "";
         this.closeStats();
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+          });
         this.$emit("search", this.search);
+        this.$emit("filter", this.type_filter);
         this.$emit("page", 0);
+    },
+    Filter: function() {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+          });
+        this.$emit("filter", this.type_filter);
     },
     closeStats: function(){
         document.getElementById('stats').style.transform="translateY(-100%)";
@@ -47,7 +86,14 @@ export default {
             document.getElementById('stats').style.display="none";
         }, 200);
     }
-  }
+  },
+    filters: {
+    capitalize: function (value) {
+        if (!value) return ''
+        value = value.toString()
+        return value.charAt(0).toUpperCase() + value.slice(1)
+        }
+    }
     
 }
 </script>
@@ -109,7 +155,7 @@ export default {
     height: 40px;
     float: left;
     background-color: #eee;
-    border: 1px solid #ccc;
+    border: 2px solid #ccc;
     padding: 0 10px;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
@@ -119,14 +165,18 @@ export default {
     outline: none;
     border: 1px solid #aaa;
 }
-.search .btn{
+.search .select-box{
     float: left;
     border: none;
+    outline: none !important;
     color: white;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     background: #003A70;
     padding: 9px;
+}
+.search .select-box:focus{
+    outline: none !important;
 }
 
 
@@ -146,9 +196,23 @@ export default {
         position: relative;
         text-align: center;
         display: block;
-        height: 140px;
+        height: 180px;
         float: center;
         padding:0px;
+    }
+    .search .select-box{
+        width: 100%;
+        margin-top: 5px;
+        border: none;
+        outline: none !important;
+        color: white;
+        border-radius: 5px;
+    }
+    .search input[type=text]{ 
+
+        border-radius: 5px;
+        
+        width: 94%;
     }
     .top #text{
         padding: 10px 0;

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <Top @search="updateSearch" @page="updatePage"/>
+    <Top @search="updateSearch" @page="updatePage" @filter="updateFilter"/>
     <Stats :id="Number(stats_show)" :color_types="tipos_cor"/>
-    <List :name_list="name_list" :color_types="tipos_cor" :type_list="type_list" :n_pokemons="n_pokemons" :id_list="id_list" :search="search" :page="page" @page="updatePage" @statsID="updateStatsID" /> 
+    <List :name_list="name_list" :color_list="color_list" :type_list="type_list" :n_pokemons="n_pokemons" :id_list="id_list" :search="search" :page="page" @page="updatePage" @statsID="updateStatsID" /> 
      
   </div>
 </template>
@@ -28,8 +28,14 @@ export default {
       offset: (this.page*this.limit),
       id_list: [],
       name_list: [],
-      type_list: [],
-      typeSearch: String,
+      type_list: [["normal"],["fighting"],["flying"],["poison"],
+                    ["ground"],["rock"],["bug"],["ghost"],
+                    ["steel"],["fire"],["water"],["grass"],
+                    ["electric"],["psychic"],["ice"],["dragon"],
+                    ["dark"],["fairy"]
+                 ],
+      color_list: [],
+      typeSearch: "",
       n_pokemons: 0,
       stats_show: 1,
       tipos_cor: {bug: "#A8B820", dark: "#705848", dragon: "#7038F8",
@@ -41,7 +47,6 @@ export default {
     }
   },
   mounted: function(){
-    this.getPokemonsTypes();
     fetch('https://pokeapi.co/api/v2/pokemon/?limit='+this.limit+'&offset='+this.offset, {
       method: 'get'
     })
@@ -50,69 +55,122 @@ export default {
     })
     .then((response) =>{
       this.pokemons = response.results;
-      this.generate_list();
+      this.getPokemonsTypes()
+      this.generate_list(this.type_list);
     });
   },
   methods:{
     getIDFromURL: function(url){
         return (url.match(/(\d+)/g) || [])[1];
     },
-    generate_list(){
-      this.name_list = [];
-      this.id_list = [];
-      var i = 0;
+    generate_list(typeList){
+      this.name_list = []
+      this.id_list = []
+      this.color_list = []
+      var i = 0
+      this.n_pokemons = 0
+      // pesquisa em branco
       if(this.search === ''){
-        for(i=this.page*60;i<(this.page+1)*60; i++){
-          this.name_list.push(this.pokemons[i].name);
-          this.id_list.push(this.getIDFromURL(this.pokemons[i].url));
-        }   
-        this.n_pokemons = this.limit 
-      }
-      else{
-        this.n_pokemons = 0
         for(i=0; (i < Object.keys(this.pokemons).length); i++){
-          if(this.pokemons[i].name.toUpperCase().includes(this.search.toUpperCase())){
-            this.n_pokemons++
+          
+          // pesquisa em branco sem tipo
+          if(this.typeSearch==="" && this.name_list.length < 60){
+            console.log(this.pokemons[i].name)
             if(this.n_pokemons < (60*(this.page+1)) && this.n_pokemons > (60*(this.page))){
-              this.name_list.push(this.pokemons[i].name);
-              this.id_list.push(this.getIDFromURL(this.pokemons[i].url));
+              console.log(this.pokemons[i].name)
+              this.name_list.push(this.pokemons[i-1].name);
+              this.id_list.push(this.getIDFromURL(this.pokemons[i-1].url));
+            }
+            this.n_pokemons++
+          }
+          // pesquisa em branco com tipo
+          else{
+            typeList.forEach(name => {
+              if((name[0] === this.typeSearch && name.includes(this.pokemons[i].name)  && this.name_list.length <60) ){
+                console.log(name[0]+ " === "+ this.typeSearch)
+                this.n_pokemons++
+                console.log(this.n_pokemons)
+                if(this.n_pokemons < (60*(this.page+1)) && this.n_pokemons > (60*(this.page))){
+                  this.name_list.push(this.pokemons[i].name);
+                  this.id_list.push(this.getIDFromURL(this.pokemons[i].url)); 
+                }
+              }
+            });
+          }     
+        }   
+      }
+      // pesquisa
+      else{
+        for(i=0; (i < Object.keys(this.pokemons).length); i++){
+          // pesquisa sem tipo
+          if(this.typeSearch==="" && this.name_list.length <60){
+            if(this.pokemons[i].name.toUpperCase().includes(this.search.toUpperCase())){
+              this.n_pokemons++
+              if(this.n_pokemons < (60*(this.page+1)) && this.n_pokemons > (60*(this.page))){
+                this.name_list.push(this.pokemons[i].name);
+                this.id_list.push(this.getIDFromURL(this.pokemons[i].url));
+              }
+            }
+          }
+          // pesquisa com tipo
+          else{
+            if(this.pokemons[i].name.toUpperCase().includes(this.search.toUpperCase())){
+              typeList.forEach(name => {
+                if((name[0] === this.typeSearch && name.includes(this.pokemons[i].name)  && this.name_list.length <60) ){
+                  console.log(name[0]+ " === "+ this.typeSearch)
+                  this.n_pokemons++
+                  if(this.n_pokemons < (60*(this.page+1)) && this.n_pokemons > (60*(this.page))){
+                    this.name_list.push(this.pokemons[i].name);
+                    this.id_list.push(this.getIDFromURL(this.pokemons[i].url)); 
+                  }
+                }
+              });
             }
           }
         }
       }
     },
-    getPokemonsTypes(){
-      fetch('https://pokeapi.co/api/v2/type', {
+    getPokemonsTypes: function (){
+        var url = "";
+        for(var i=0; i<this.type_list.length;
+              i++){
+          url  = "https://pokeapi.co/api/v2/type/" + (i+1)
+         fetch(url)
+          .then((response) =>
+            response.json())
+          .then(response => {
+            var names = []
+            response.pokemon.forEach(element => {
+              names.push(element.pokemon.name)
+            })
+            names.forEach(name => {
+              this.type_list[response.id-1].push(name); 
+            });
+            })
+        }
+    },
+    getByType(url){
+      return fetch(url, {
         method: 'get'
       })
-      .then((response) =>{
-        return response.json()
-      
-      })
-      .then((response) =>{
-        var url = "";
-        for(var i=0; i<Object.keys(response.results).length; i++){
-          url  = response.results[i].url
-          fetch(url, {
-            method: 'get'
-          })
-          .then((response) =>{
-            return response.json()
-          })
-          .then((response) =>{
-            var json = "{\""+response.name+"\":"+ JSON.stringify(response.pokemon)+"}"
-            this.type_list.push(JSON.parse(json));  
-          });
-        }
-      });
+      .then((response) =>
+         response.json())
     },
     updateSearch(s){
       this.search = s;
-      this.generate_list();
+      this.getPokemonsTypes()
+      this.generate_list(this.type_list)
     },
     updatePage(p){
       this.page = p;
-      this.generate_list();
+      this.getPokemonsTypes()
+      this.generate_list(this.type_list)
+    },
+    updateFilter(f){
+      this.typeSearch = f
+      this.page = 0
+      this.getPokemonsTypes()
+      this.generate_list(this.type_list)
     },
     updateStatsID(s){
       this.stats_show = s;
@@ -131,7 +189,7 @@ body{
 *{
     margin: 0;
     font: 20px 'Product Sans thin Regular';
-    border: 0px solid black;
+    border: 01px solid black;
     transition: 0.3s;
 }
 a {
